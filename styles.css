@@ -1,0 +1,313 @@
+/* Estilos generales */
+:root {
+    --color-dark: #2c3e50;
+    --color-primary: #0048B3; 
+    --color-accent: #0048B3;  
+    --color-light: #ecf0f1;
+    --color-white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* --- ENCABEZADO (Header) --- */
+header {
+    background: var(--color-white);
+    color: var(--color-dark);
+    
+    /* CAMBIO MANTENIDO: Padding reducido */
+    padding: 5px 0; 
+    
+    min-height: 50px;
+    border-bottom: 3px solid var(--color-accent);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Estilo para tu logo principal */
+header .logo-principal img {
+    /* CAMBIO MANTENIDO: Tamaño del logo aumentado */
+    height: 100px; 
+    width: auto;
+    display: block;
+}
+
+
+/* --- CÓDIGO DEL MENÚ ANIMADO --- */
+
+header nav {
+    float: none;
+    margin-top: 0; 
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: table;
+    text-align: center;
+}
+
+header nav li {
+    display: table-cell;
+    position: relative;
+    padding: 15px 0;
+}
+
+header nav a {
+    color: var(--color-dark);
+    font-size: 1.1em; 
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+}
+
+header nav a:hover {
+    color: var(--color-dark); 
+}
+
+header nav a:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0; /* Posición inferior */
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: var(--color-accent); 
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+header nav a:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+/* --- FIN DEL CÓDIGO DEL MENÚ --- */
+
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+    background: var(--color-white);
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 20px;
+}
+
+/* 🚀 CORRECCIÓN CLAVE: Reducción del espaciado entre TÍTULO y LOGO LATERAL */
+.title-container {
+    display: flex;         
+    justify-content: center; 
+    align-items: center;   
+    /* AJUSTE CLAVE: Se reduce el 'gap' para acercar la imagen al texto */
+    gap: 5px;             
+    margin-bottom: 20px;   
+}
+
+/* AJUSTE CLAVE: Asegura que el h1 no tenga ningún margen o padding extra */
+.title-container h1 {
+    color: var(--color-dark);
+    margin: 0; 
+    padding: 0; 
+}
+
+/* Estilo para la imagen del título */
+#logo-titulo {
+    /* AJUSTE CLAVE: Tamaño de la imagen reducido (de 230px a 45px como ejemplo) para que se alinee mejor con el texto */
+    width: 200px; 
+    height: auto; 
+}
+/* 🚀 FIN DE LA CORRECCIÓN CLAVE */
+
+
+/* Sección de advertencia */
+.warning-section {
+    background: #f1c40f1a;
+    color: var(--color-dark);
+    padding: 20px;
+    border-radius: 4px;
+    border-left: 5px solid var(--color-primary); 
+    margin-top: 30px;
+    font-size: 1.1em;
+}
+
+.warning-section h2 {
+    color: var(--color-primary); 
+    margin-top: 0;
+}
+
+/* --- BOTONES --- */
+.btn-primary {
+    display: inline-block;
+    color: var(--color-white);
+    background-color: var(--color-accent); 
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: 30px;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #003a8f;
+}
+
+/* --- ESTILOS DE FORMULARIO (sec.html) --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--color-dark);
+}
+
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+#ia-form .btn-primary {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin: 30px 0;
+}
+
+/* --- ESTILOS DE RESULTADO (Div de predicción) --- */
+#forecast-result {
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    text-align: center;
+    background: var(--color-light);
+}
+
+.result-low-risk {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    font-weight: bold;
+}
+
+.result-high-risk {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    font-weight: bold;
+}
+
+/* --- CORRECCIÓN AÑADIDA: Clase para Riesgo Medio --- */
+.result-medium-risk {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    font-weight: bold;
+}
+
+.result-error {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    font-weight: bold;
+}
+
+/* --- CÓDIGO PARA EL FOOTER --- */
+footer {
+    background: var(--color-white);
+    color: var(--color-dark);
+    padding: 30px 0;
+    margin-top: 40px;
+    border-top: 3px solid var(--color-accent);
+}
+
+footer p {
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+footer .logos-institucionales {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+footer .logos-institucionales img {
+    /* height: 60px; (Eliminado) */
+    width: auto;
+    opacity: 0.8; 
+    transition: opacity 0.3s;
+}
+
+footer .logos-institucionales img:hover {
+    opacity: 1;
+}
+
+/* CAMBIOS MANTENIDOS: Reglas para cada logo por ID en el footer */
+
+#logo-inst-1 {
+    height: 120px; /* Tamaño para el logo 1 (UAQ) */
+}
+
+#logo-inst-2 {
+    height: 60px; /* Tamaño para el logo 2 (INER) */
+}
+
+#logo-inst-3 {
+    height: 120px; /* Tamaño para el logo 3 (FOPER) */
+}

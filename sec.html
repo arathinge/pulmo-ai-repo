@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico - PULMO AI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="main.html" class="logo-principal"><img src="Pulmo.png" alt="Logo PULMO AI"></a>
+            <nav>
+                <ul>
+                    <li><a href="main.html">Inicio</a></li>
+                    <li><a href="sec.html">Diagnóstico</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            
+            <h2 id="welcome-message" style="text-align: left; margin-top: 15px;"></h2>
+            <h2>Diagnóstico de Hipertensión Pulmonar</h2>
+            <p>Introduzca los 5 parámetros del paciente para que el modelo de IA genere un diagnóstico.</p>
+            
+            <div class="patient-info" style="margin-bottom: 20px; padding: 10px; background-color: #f4f4f4; border-radius: 5px;">
+                <p style="margin: 0;"><strong>Paciente:</strong> César Mejía</p>
+            </div>
+
+            <form id="ia-form">
+                
+                <div class="form-group">
+                    <label for="causa_seleccionada">1. Comorbilidad asociada:</label>
+                    <select id="causa_seleccionada" name="causa_seleccionada" required>
+                        <option value="none">Ninguna</option>
+                        <option value="cardiopatias_congenitas">Cardiopatías congénitas</option>
+                        <option value="evop_hcp">HAP con características de afectación venosa o capilar (EVOP/HCP)</option>
+                        <option value="enf_tejido_conectivo">Enfermedad del tejido conectivo</option>
+                        <option value="infeccion_vih">Infección por VIH</option>
+                        <option value="colangitis_biliar">Colangitis biliar primaria</option>
+                        <option value="idiopatica">Idiopática</option>
+                        <option value="asociada_drogas_toxinas">Asociada a drogas y toxinas</option>
+                        <option value="hereditaria">Hereditaria</option>
+                        <option value="esquistosomiasis">Esquistosomiasis</option>
+                        <option value="hipertension_portal">Hipertensión portal</option>
+                        <option value="hp_neonato">HP persistente del neonato</option>
+                        <option value="en_estudio">En estudio</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fatiga">2. ¿El paciente presenta fatiga?</label>
+                    <select id="fatiga" name="fatiga" required>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bendopnea">3. ¿El paciente presenta dificultad para respirar durante flexión anterior del tronco (bendopnea)?</label>
+                    <select id="bendopnea" name="bendopnea" required>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hemoptisis">4. ¿El paciente presenta expectoración de sangre al toser (hemoptisis)?</label>
+                    <select id="hemoptisis" name="hemoptisis" required>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sincope">5. ¿El paciente presenta pérdida temporal y/o súbita de la conciencia durante o poco después del esfuerzo físico (síncope)</label>
+                    <select id="sincope" name="sincope" required>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn-primary" onclick="generateForecast()">Generar diagnóstico</button>
+            </form>
+
+
+            <hr>
+
+            <h3>Resultado del Modelo</h3>
+            <div id="forecast-result">
+                El pronóstico aparecerá aquí.
+            </div>
+            
+            <div class="warning-section" style="margin-top: 20px;">
+                <p>🚨 **ADVERTENCIA PROFESIONAL:** Este resultado es una **clasificación de Sospecha de HP** generada por un modelo de Inteligencia Artificial, **NO ES UN DIAGNÓSTICO**. La interpretación de esta información es responsabilidad exclusiva del profesional de la salud.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Con el respaldo de:</p>
+            <div class="logos-institucionales">
+                <img src="UAQ.png" alt="Logo Institución 1" id="logo-inst-1">
+                <img src="INER.png" alt="Logo Institución 2" id="logo-inst-2">
+                <img src="FOPER.png" alt="Logo Institución 3" id="logo-inst-3">
+                </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const doctorName = prompt("Por favor, ingrese su nombre, Dr.: ");
+
+            if (doctorName && doctorName.trim() !== "") {
+                document.getElementById('welcome-message').innerHTML = `Bienvenido, Dr. ${doctorName}`;
+            } else {
+                document.getElementById('welcome-message').innerHTML = 'Bienvenido, Doctor';
+            }
+        };
+
+
+        async function generateForecast() {
+            const resultDiv = document.getElementById('forecast-result');
+            resultDiv.innerHTML = "Procesando...";
+            resultDiv.className = ''; 
+
+            try {
+                // 1. Obtener los 5 valores del formulario
+                const fatigaVal = document.getElementById('fatiga').value;
+                const bendopneaVal = document.getElementById('bendopnea').value;
+                const hemoptisisVal = document.getElementById('hemoptisis').value;
+                const sincopeVal = document.getElementById('sincope').value;
+                const causaSeleccionada = document.getElementById('causa_seleccionada').value; 
+                
+                // 2. Crear el JSON para enviar al backend.
+                const dataToSend = {
+                    fatiga: parseInt(fatigaVal),
+                    bendopnea: parseInt(bendopneaVal),
+                    hemoptisis: parseInt(hemoptisisVal),
+                    sincope: parseInt(sincopeVal),
+                    causa_g1: 0.0, 
+                    causa_seleccionada: causaSeleccionada 
+                };
+                
+                // 3. Enviar al backend
+                const response = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataToSend),
+                });
+
+                const result = await response.json();
+
+                // 4. Mostrar el resultado (Clasificación Binaria)
+                if (response.ok && result.success) { 
+                    const diagnosis = result.diagnosis; 
+
+                    let riskClass = '';
+                    if (diagnosis === "Sospecha de HP") {
+                        riskClass = 'result-high-risk'; 
+                    } else { 
+                        riskClass = 'result-low-risk'; 
+                    }
+                    
+                    resultDiv.className = riskClass;
+
+                    // *** ÚNICA LÍNEA MODIFICADA: Quitamos el Índice de Probabilidad ***
+                    resultDiv.innerHTML = `
+                        <strong>${diagnosis}</strong>
+                    `;
+                    // ***************************************************************
+                } else {
+                    let errorDetail = result.detail || 'Error desconocido';
+                    if (Array.isArray(result.detail)) {
+                        errorDetail = result.detail.map(e => `${e.loc[1]}: ${e.msg}`).join('<br>');
+                    }
+                    resultDiv.innerHTML = `Error en la predicción: <br>${errorDetail}`;
+                    resultDiv.className = 'result-error';
+                }
+
+            } catch (error) {
+                console.error('Error en fetch:', error);
+                resultDiv.innerHTML = "Error de conexión. Asegúrese de que el servidor de IA (Python) esté ejecutándose.";
+                resultDiv.className = 'result-error';
+            }
+        }
+    </script>
+</body>
+</html>
