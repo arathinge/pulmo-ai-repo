@@ -30,7 +30,7 @@
                 <p style="margin: 0;"><strong>Paciente:</strong> César Mejía</p>
             </div>
 
-            <form id="ia-form">
+            <form id="ia-form"> 
                 
                 <div class="form-group">
                     <label for="causa_seleccionada">1. Comorbilidad asociada:</label>
@@ -83,7 +83,7 @@
                     </select>
                 </div>
                 
-                <button type="button" class="btn-primary" onclick="generateForecast()">Generar diagnóstico</button>
+                <button type="submit" class="btn-primary">Generar diagnóstico</button>
             </form>
 
 
@@ -112,6 +112,7 @@
     </footer>
 
     <script>
+        // Manejador para el saludo inicial
         window.onload = function() {
             const doctorName = prompt("Por favor, ingrese su nombre, Dr.: ");
 
@@ -122,8 +123,17 @@
             }
         };
 
+        // Manejador del formulario para prevenir el envío y llamar a la función
+        document.getElementById('ia-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            generateForecast();
+        });
+
 
         async function generateForecast() {
+            // 🚨🚨🚨 CORRECCIÓN CRUCIAL: URL REAL DE RENDER 🚨🚨🚨
+            const API_URL = "https://pulmo-ai-repo.onrender.com"; 
+
             const resultDiv = document.getElementById('forecast-result');
             resultDiv.innerHTML = "Procesando...";
             resultDiv.className = ''; 
@@ -137,17 +147,17 @@
                 const causaSeleccionada = document.getElementById('causa_seleccionada').value; 
                 
                 // 2. Crear el JSON para enviar al backend.
+                // *CORRECCIÓN*: Sólo enviamos los 5 campos que el backend espera
                 const dataToSend = {
                     fatiga: parseInt(fatigaVal),
                     bendopnea: parseInt(bendopneaVal),
                     hemoptisis: parseInt(hemoptisisVal),
                     sincope: parseInt(sincopeVal),
-                    causa_g1: 0.0, 
-                    causa_seleccionada: causaSeleccionada 
+                    causa_seleccionada: causaSeleccionada // FastAPI mapeará esto a causa_g1
                 };
                 
                 // 3. Enviar al backend
-                const response = await fetch('http://127.0.0.1:8000/predict', {
+                const response = await fetch(`${API_URL}/predict`, { // Usa la API_URL
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -170,7 +180,7 @@
                     
                     resultDiv.className = riskClass;
 
-                    // *** ÚNICA LÍNEA MODIFICADA: Quitamos el Índice de Probabilidad ***
+                    // *** CORRECCIÓN SOLICITADA: Quitamos la palabra "Clasificación" ***
                     resultDiv.innerHTML = `
                         <strong>${diagnosis}</strong>
                     `;
@@ -178,6 +188,7 @@
                 } else {
                     let errorDetail = result.detail || 'Error desconocido';
                     if (Array.isArray(result.detail)) {
+                        // Formatear errores de validación de FastAPI
                         errorDetail = result.detail.map(e => `${e.loc[1]}: ${e.msg}`).join('<br>');
                     }
                     resultDiv.innerHTML = `Error en la predicción: <br>${errorDetail}`;
@@ -186,7 +197,8 @@
 
             } catch (error) {
                 console.error('Error en fetch:', error);
-                resultDiv.innerHTML = "Error de conexión. Asegúrese de que el servidor de IA (Python) esté ejecutándose.";
+                // Mensaje de error más claro para el usuario final
+                resultDiv.innerHTML = "❌ Error de conexión. No se pudo contactar al servidor de IA. Por favor, asegúrese de que el servicio en Render esté activo.";
                 resultDiv.className = 'result-error';
             }
         }
