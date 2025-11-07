@@ -29,10 +29,7 @@ body {
 header {
     background: var(--color-white);
     color: var(--color-dark);
-    
-    /* CAMBIO MANTENIDO: Padding reducido */
     padding: 5px 0; 
-    
     min-height: 50px;
     border-bottom: 3px solid var(--color-accent);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
@@ -49,15 +46,12 @@ header .container {
 
 /* Estilo para tu logo principal */
 header .logo-principal img {
-    /* CAMBIO MANTENIDO: Tamaño del logo aumentado */
     height: 100px; 
     width: auto;
     display: block;
 }
 
-
 /* --- CÓDIGO DEL MENÚ ANIMADO --- */
-
 header nav {
     float: none;
     margin-top: 0; 
@@ -94,7 +88,7 @@ header nav a:hover {
 
 header nav a:after {
     background: none repeat scroll 0 0 transparent;
-    bottom: 0; /* Posición inferior */
+    bottom: 0;
     content: "";
     display: block;
     height: 2px;
@@ -109,9 +103,6 @@ header nav a:hover:after {
     width: 100%;
     left: 0;
 }
-
-/* --- FIN DEL CÓDIGO DEL MENÚ --- */
-
 
 /* --- CONTENIDO PRINCIPAL --- */
 .main-content {
@@ -128,31 +119,25 @@ header nav a:hover:after {
     padding: 20px;
 }
 
-/* 🚀 CORRECCIÓN CLAVE: Reducción del espaciado entre TÍTULO y LOGO LATERAL */
+/* Título y logo */
 .title-container {
     display: flex;         
     justify-content: center; 
     align-items: center;   
-    /* AJUSTE CLAVE: Se reduce el 'gap' para acercar la imagen al texto */
     gap: 5px;             
     margin-bottom: 20px;   
 }
 
-/* AJUSTE CLAVE: Asegura que el h1 no tenga ningún margen o padding extra */
 .title-container h1 {
     color: var(--color-dark);
     margin: 0; 
     padding: 0; 
 }
 
-/* Estilo para la imagen del título */
 #logo-titulo {
-    /* AJUSTE CLAVE: Tamaño de la imagen reducido (de 230px a 45px como ejemplo) para que se alinee mejor con el texto */
     width: 200px; 
     height: auto; 
 }
-/* 🚀 FIN DE LA CORRECCIÓN CLAVE */
-
 
 /* Sección de advertencia */
 .warning-section {
@@ -225,7 +210,7 @@ hr {
     margin: 30px 0;
 }
 
-/* --- ESTILOS DE RESULTADO (Div de predicción) --- */
+/* --- RESULTADOS --- */
 #forecast-result {
     padding: 20px;
     border-radius: 5px;
@@ -249,7 +234,6 @@ hr {
     font-weight: bold;
 }
 
-/* --- CORRECCIÓN AÑADIDA: Clase para Riesgo Medio --- */
 .result-medium-risk {
     background-color: #fff3cd;
     color: #856404;
@@ -264,7 +248,7 @@ hr {
     font-weight: bold;
 }
 
-/* --- CÓDIGO PARA EL FOOTER --- */
+/* --- FOOTER --- */
 footer {
     background: var(--color-white);
     color: var(--color-dark);
@@ -288,7 +272,6 @@ footer .logos-institucionales {
 }
 
 footer .logos-institucionales img {
-    /* height: 60px; (Eliminado) */
     width: auto;
     opacity: 0.8; 
     transition: opacity 0.3s;
@@ -298,16 +281,105 @@ footer .logos-institucionales img:hover {
     opacity: 1;
 }
 
-/* CAMBIOS MANTENIDOS: Reglas para cada logo por ID en el footer */
+/* Tamaños individuales de logos */
+#logo-inst-1 { height: 96px; }
+#logo-inst-2 { height: 48px; }
+#logo-inst-3 { height: 96px; }
+#logo-inst-4 { height: 48px; }
 
-#logo-inst-1 {
-    height: 120px; /* Tamaño para el logo 1 (UAQ) */
-}
+/* === AJUSTES RESPONSIVE PARA MÓVIL === */
+@media (max-width: 768px) {
 
-#logo-inst-2 {
-    height: 60px; /* Tamaño para el logo 2 (INER) */
-}
+  body {
+    text-align: left;
+  }
 
-#logo-inst-3 {
-    height: 120px; /* Tamaño para el logo 3 (FOPER) */
+  header .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header .logo-principal img {
+    height: 70px;
+    margin-bottom: 10px;
+  }
+
+  header nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  header nav li {
+    display: block;
+    padding: 8px 0;
+  }
+
+  header nav a {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  .main-content {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .title-container {
+    flex-direction: column;
+  }
+
+  #logo-titulo {
+    width: 150px;
+    margin-top: 10px;
+  }
+
+  .warning-section {
+    font-size: 1em;
+    padding: 15px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    font-size: 1em;
+    padding: 14px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 1em;
+  }
+
+  .form-group select {
+    font-size: 1em;
+  }
+
+  footer .logos-institucionales {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  footer p {
+    font-size: 1em;
+  }
+
+  /* ==== CORRECCIÓN DE TAMAÑOS DE LOGOS ==== */
+  footer .logos-institucionales img {
+    max-width: 70%;       /* Los hace adaptarse al ancho del contenedor */
+    height: auto;         /* Mantiene la proporción */
+    max-height: 70px;     /* Altura máxima similar para todos */
+    object-fit: contain;  /* Asegura que no se deformen */
+  }
+
+  /* Elimina las alturas fijas anteriores */
+  #logo-inst-1,
+  #logo-inst-2,
+  #logo-inst-3,
+  #logo-inst-4 {
+    height: auto !important;
+    max-height: 70px;
+  }
 }
